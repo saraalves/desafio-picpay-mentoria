@@ -4,12 +4,13 @@ import com.picpay.desafio.android.data.local.UserLocalDataSource
 import com.picpay.desafio.android.data.remote.datasource.UserRemoteDataSource
 import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.domain.repository.UserRepository
+import kotlinx.coroutines.flow.Flow
 
 class UserRepositoryImpl(
     private val userRemoteDataSource: UserRemoteDataSource,
     private val userLocalDataSourceImpl: UserLocalDataSource
 ) : UserRepository {
-    override suspend fun getUser(): List<User> {
+    override fun getUser(): Flow<List<User>> {
         return userRemoteDataSource.getUser()
     }
 

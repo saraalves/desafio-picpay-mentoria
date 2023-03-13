@@ -34,7 +34,7 @@ val mapperModule = module {
     single { UserResponseToModelMapper() }
 }
 val dataSourceModule = module {
-    single<UserRemoteDataSource> { UserRemoteDataSourceImpl(get(), get()) }
+    single<UserRemoteDataSource> { UserRemoteDataSourceImpl(userApi = get(), userMapper = get()) }
     single<UserLocalDataSource> { UserLocalDataSourceImpl(get(), get(), get()) }
 }
 

@@ -1,10 +1,10 @@
 package com.picpay.desafio.android
 
-import com.picpay.desafio.android.data.datasource.remote.PicPayService
-import com.picpay.desafio.android.data.model.UserResponse
+import com.picpay.desafio.android.data.remote.api.UserApi
+import com.picpay.desafio.android.data.remote.model.UserResponse
 
 class ExampleService(
-    private val service: PicPayService
+    private val service: UserApi
 ) {
 
     fun example(): List<UserResponse> {

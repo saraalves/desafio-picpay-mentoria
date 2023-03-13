@@ -2,11 +2,12 @@ package com.picpay.desafio.android.domain.usecase
 
 import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.domain.repository.UserRepository
+import kotlinx.coroutines.flow.Flow
 
 class GetUserUseCase(
     private val repository: UserRepository
 ) {
-    suspend operator fun invoke(): List<User> {
+    operator fun invoke(): Flow<List<User>> {
         return repository.getUser()
     }
 }

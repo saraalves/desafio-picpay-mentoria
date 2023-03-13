@@ -1,7 +1,8 @@
 package com.picpay.desafio.android.domain.repository
 
 import com.picpay.desafio.android.domain.model.response.User
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun getUser(): List<User>
+    fun getUser(): Flow<List<User>>
 }
