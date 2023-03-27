@@ -10,8 +10,7 @@ class UserRemoteDataSourceImpl(
     private val userApi: UserApi,
     private val userMapper: UserResponseToModelMapper
 ) : UserRemoteDataSource {
-    override fun getUser(): Flow<List<User>> {
+    override fun getUsers(): Flow<List<User>> {
         return flow { emit(userMapper.map(userApi.getUsers())) }
-
     }
 }

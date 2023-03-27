@@ -3,6 +3,8 @@ package com.picpay.desafio.android.data.local
 import com.picpay.desafio.android.data.mapper.UserCacheToDomainMapper
 import com.picpay.desafio.android.data.mapper.UserDomainToCacheMapper
 import com.picpay.desafio.android.domain.model.response.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class UserLocalDataSourceImpl(
     private val userDao: UserDao,
@@ -13,13 +15,19 @@ class UserLocalDataSourceImpl(
         userDao.saveUsers(userEntityList.map { userDomainToCacheMapper.map(it) })
     }
 
-    override suspend fun getUsers(): List<User> {
-       return userDao.getUsers().map {
-            userCacheToDomainMapper.map(it)
-        }
+    override fun getUsers(): Flow<List<User>> {
+        return flowOf(
+            userDao.getUsers().map {
+                userCacheToDomainMapper.map(it)
+            }
+        )
     }
 
-    override suspend fun deleteUser(id: Int) {
+    override fun deleteUser(id: String) {
         userDao.deleteUser(id)
+    }
+
+    override fun deleteUsers() {
+        userDao.deleteUsers()
     }
 }

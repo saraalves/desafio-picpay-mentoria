@@ -1,28 +1,43 @@
 package com.picpay.desafio.android.data.repository
 
+import com.picpay.desafio.android.data.extensions.parseHttpError
 import com.picpay.desafio.android.data.local.UserLocalDataSource
 import com.picpay.desafio.android.data.remote.datasource.UserRemoteDataSource
 import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 class UserRepositoryImpl(
     private val userRemoteDataSource: UserRemoteDataSource,
-    private val userLocalDataSourceImpl: UserLocalDataSource
+    private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
-    override fun getUser(): Flow<List<User>> {
-        return userRemoteDataSource.getUser()
+    override fun getUser(): Flow<List<User>> = flow {
+        fetchUserLocalData().collect {
+            if (it.isEmpty()) {
+                getUserData().collect { userRemoteList ->
+                    userRemoteList.toList().apply {
+                        registerUserListDb(this)
+                        emit(this)
+                    }
+                }
+            } else {
+                emit(it)
+            }
+        }
     }
 
-    private suspend fun deleteUsersDb(id: Int) {
-        userLocalDataSourceImpl.deleteUser(id)
-    }
+    override fun getUserData(): Flow<List<User>> = userRemoteDataSource.getUsers().parseHttpError()
 
-    private suspend fun registerUserListDb(data: List<User>) {
-        userLocalDataSourceImpl.saveUsers(data)
-    }
 
-    private suspend fun getUserListDb(): List<User> {
-        return userLocalDataSourceImpl.getUsers()
-    }
+    private suspend fun registerUserListDb(data: List<User>) = userLocalDataSource.saveUsers(data)
+
+    override fun fetchUserLocalData(): Flow<List<User>> = userLocalDataSource.getUsers()
+
+    private fun deleteUserDb(id: String) = userLocalDataSource.deleteUser(id)
+
+    private fun deleteUsersDb() = userLocalDataSource.deleteUsers()
+
 }
+
