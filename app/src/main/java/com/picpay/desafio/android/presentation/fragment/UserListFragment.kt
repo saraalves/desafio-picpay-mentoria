@@ -1,30 +1,42 @@
-package com.picpay.desafio.android.presentation.activity
+package com.picpay.desafio.android.presentation.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.presentation.adapter.UserListAdapter
 import com.picpay.desafio.android.presentation.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.picpay.desafio.databinding.UserListFragment
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class UserListFragment : Fragment(R.layout.fragment_user_list) {
 
-    private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
-    private val progressBar: ProgressBar by lazy { findViewById<ProgressBar>(R.id.user_list_progress_bar) }
+    private var binding: UserListFragmentBinding? = null
+
     private val adapter: UserListAdapter by lazy { UserListAdapter() }
     private val viewModel: UserViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_user_list, container, false)
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         observeViewModel()
         setupRecyclerView()
         viewModel.getUsers()
+
     }
 
     private fun setupRecyclerView() {
@@ -50,7 +62,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         viewModel.error.observe(this, Observer { errorMessage ->
             progressBar.visibility = View.GONE
             recyclerView.visibility = View.GONE
-            Toast.makeText(this@MainActivity, getString(errorMessage), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@UserListFragment, getString(errorMessage), Toast.LENGTH_SHORT).show()
         })
     }
+
 }

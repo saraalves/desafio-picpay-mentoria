@@ -8,7 +8,7 @@ import com.picpay.desafio.android.data.remote.model.UserEntity
 @Dao
 interface UserDao {
     @Insert
-    suspend fun saveUsers(userEntity: List<UserEntity>)
+    fun saveUsers(userEntity: List<UserEntity>)
 
     @Query("SELECT * FROM UserData")
     fun getUsers(): List<UserEntity>

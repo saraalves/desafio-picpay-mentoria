@@ -36,17 +36,22 @@ class UserViewModel(
             getUserUseCase()
                 .flowOn(dispatcher)
                 .onStart { _loading.value = true }
-                .catch { _error.value = R.string.error }
+                .catch { _error.value = R.string.error } // tratar o erro pra ser generico ou conexão  // função pra
+                // tratar erro do users
                 .onCompletion { _loading.value = false }
                 .collect { _users.value = it }
         }
     }
 
-    // função pra tratar erro do users
-    // colocar tela de detalhes
+
     // terminar o data source local
-    // adicionar os fragments um pra lista e outro pra tela de detalhes
+
+    // adicionar os fragments um pra lista
+
+    // fragment pra tela de detalhes
+
     // colocar telas de erro com ilustração
+
     // adicionar testes unitários
 
 }

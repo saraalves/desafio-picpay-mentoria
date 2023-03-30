@@ -14,6 +14,7 @@ class UserRepositoryImpl(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
     override fun getUser(): Flow<List<User>> = flow {
+        // trocar a ordem chamar primeiro a api pq se não vamos ter sempre uma lista do dao desatualizada
         fetchUserLocalData().collect {
             if (it.isEmpty()) {
                 getUserData().collect { userRemoteList ->

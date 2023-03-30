@@ -18,6 +18,6 @@ internal fun Throwable.toRequestThrowable(): Throwable {
         is SocketTimeoutException,
         is SocketException,
         is ConnectException -> ConnectionError()
-        else -> this
+        else -> this // Generic Error
     }
 }

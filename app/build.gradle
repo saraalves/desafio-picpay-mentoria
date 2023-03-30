@@ -1,13 +1,14 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.6.21"
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
 
 android {
     compileSdkVersion 32
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.picpay.desafio.android"
         minSdkVersion 21
@@ -37,6 +38,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    defaultConfig {
+        multiDexEnabled = true
+    }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -56,6 +65,7 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     implementation "com.google.dagger:dagger:$dagger_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation "androidx.room:room-runtime:$room_version"
