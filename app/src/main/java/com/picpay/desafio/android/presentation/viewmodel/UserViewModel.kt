@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.domain.exception.ConnectionError
 import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.domain.usecase.GetUserUseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -36,10 +37,16 @@ class UserViewModel(
             getUserUseCase()
                 .flowOn(dispatcher)
                 .onStart { _loading.value = true }
-                .catch { _error.value = R.string.error } // tratar o erro pra ser generico ou conexão  // função pra
-                // tratar erro do users
+                .catch { handeError(it) }
                 .onCompletion { _loading.value = false }
                 .collect { _users.value = it }
+        }
+    }
+
+    private fun handeError(error: Throwable): Pair<Int, Int> {
+        return when(error) {
+            is ConnectionError -> Pair(R.string.connection_error_title, R.string.connection_error_msg)
+            else -> Pair(R.string.error_title, R.string.error_msg)
         }
     }
 

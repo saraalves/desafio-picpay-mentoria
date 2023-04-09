@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserLocalDataSource {
 
     suspend fun saveUsers(userEntity: List<User>)
-    fun getUsers(): Flow<List<User>>
+    fun getUsers(): List<User>
     fun deleteUser(id: String)
     fun deleteUsers()
 }

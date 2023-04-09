@@ -14,17 +14,12 @@ class UserRepositoryImpl(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
     override fun getUser(): Flow<List<User>> = flow {
-        // trocar a ordem chamar primeiro a api pq se não vamos ter sempre uma lista do dao desatualizada
-        fetchUserLocalData().collect {
-            if (it.isEmpty()) {
-                getUserData().collect { userRemoteList ->
-                    userRemoteList.toList().apply {
-                        registerUserListDb(this)
-                        emit(this)
-                    }
-                }
+        getUserData().collect { remoteList ->
+            if (userLocalDataSource.getUsers() == remoteList) {
+                fetchUserLocalData().collect { emit(remoteList) }
             } else {
-                emit(it)
+                registerUserListDb(remoteList)
+                emit(remoteList)
             }
         }
     }
@@ -34,7 +29,7 @@ class UserRepositoryImpl(
 
     private suspend fun registerUserListDb(data: List<User>) = userLocalDataSource.saveUsers(data)
 
-    override fun fetchUserLocalData(): Flow<List<User>> = userLocalDataSource.getUsers()
+    override fun fetchUserLocalData(): Flow<List<User>> = flow { emit(userLocalDataSource.getUsers())  }
 
     private fun deleteUserDb(id: String) = userLocalDataSource.deleteUser(id)
 

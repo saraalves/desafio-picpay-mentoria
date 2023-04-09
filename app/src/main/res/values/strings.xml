@@ -2,7 +2,13 @@
     <string name="app_name">PicPay</string>
     <string name="title">Contatos</string>
     <string name="error">Ocorreu um erro. Tente novamente.</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    // error messages
+    <string name="error_title">Opa! Erramos por aqui</string>
+    <string name="error_msg">Tivemos uma falha no sistema e não conseguimos carregar essas informações.</string>
+    <string name="connection_error_title">Ops, sem conexão</string>
+    <string name="connection_error_msg">Sem conexão com a internet.</string>
+    <string name="error_button">Tentar novamente</string>
 
 </resources>

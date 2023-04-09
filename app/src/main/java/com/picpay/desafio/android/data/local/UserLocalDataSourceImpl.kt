@@ -15,12 +15,10 @@ class UserLocalDataSourceImpl(
         userDao.saveUsers(userEntityList.map { userDomainToCacheMapper.map(it) })
     }
 
-    override fun getUsers(): Flow<List<User>> {
-        return flowOf(
-            userDao.getUsers().map {
+    override fun getUsers(): List<User> {
+        return userDao.getUsers().map {
                 userCacheToDomainMapper.map(it)
             }
-        )
     }
 
     override fun deleteUser(id: String) {

@@ -7,19 +7,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.presentation.adapter.UserListAdapter
+import com.picpay.desafio.android.databinding.ActivityUserListBinding
 import com.picpay.desafio.android.presentation.fragment.UserListFragment
-import com.picpay.desafio.android.presentation.viewmodel.UserViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserListActivity : AppCompatActivity(R.layout.activity_user_list) {
 
+    private val binding by lazy {
+        ActivityUserListBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         val fm: FragmentManager = supportFragmentManager
 

@@ -7,7 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class GetUserUseCase(
     private val repository: UserRepository
 ) {
-    operator fun invoke(): Flow<List<User>> {
-        return repository.getUser()
-    }
+    operator fun invoke(): Flow<List<User>> = repository.getUser()
 }
