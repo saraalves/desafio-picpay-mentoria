@@ -6,6 +6,7 @@ import com.picpay.desafio.android.data.remote.datasource.UserRemoteDataSource
 import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
@@ -14,14 +15,20 @@ class UserRepositoryImpl(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
     override fun getUser(): Flow<List<User>> = flow {
-        getUserData().collect { remoteList ->
+        // aqui que a gente faz tratamento pro erro de conecção
+        getUserData().catch { error ->
+            fetchUserLocalData().collect {
+                if(it.isEmpty()) { throw error } else { emit(it)}
+            }
+         }.collect { remoteList ->
             if (userLocalDataSource.getUsers() == remoteList) {
-                fetchUserLocalData().collect { emit(remoteList) }
+                fetchUserLocalData().collect { emit(it) }
             } else {
                 registerUserListDb(remoteList)
                 emit(remoteList)
             }
         }
+
     }
 
     override fun getUserData(): Flow<List<User>> = userRemoteDataSource.getUsers().parseHttpError()

@@ -28,8 +28,8 @@ class UserViewModel(
     private val _loading = MutableLiveData<Boolean>()
     var loading: LiveData<Boolean> = _loading
 
-    private val _error = MutableLiveData<Int>()
-    var error: LiveData<Int> = _error
+    private val _error = MutableLiveData<Pair<Int, Int>>()
+    var error: LiveData<Pair<Int, Int>> = _error
 
 
     fun getUsers() {
@@ -43,10 +43,10 @@ class UserViewModel(
         }
     }
 
-    private fun handeError(error: Throwable): Pair<Int, Int> {
-        return when(error) {
-            is ConnectionError -> Pair(R.string.connection_error_title, R.string.connection_error_msg)
-            else -> Pair(R.string.error_title, R.string.error_msg)
+    private fun handeError(error: Throwable) {
+        when (error) {
+            is ConnectionError -> _error.value = Pair(R.string.connection_error_title, R.string.connection_error_msg)
+            else -> _error.value = Pair(R.string.error_title, R.string.error_msg)
         }
     }
 
