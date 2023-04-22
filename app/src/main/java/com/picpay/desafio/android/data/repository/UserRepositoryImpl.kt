@@ -31,7 +31,7 @@ class UserRepositoryImpl(
 
     }
 
-    override fun getUserData(): Flow<List<User>> = userRemoteDataSource.getUsers().parseHttpError()
+    override fun getUserData(): Flow<List<User>> = userRemoteDataSource.getUsers()
 
 
     private suspend fun registerUserListDb(data: List<User>) = userLocalDataSource.saveUsers(data)

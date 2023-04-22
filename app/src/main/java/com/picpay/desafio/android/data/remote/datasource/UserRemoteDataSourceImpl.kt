@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.data.remote.datasource
 
+import com.picpay.desafio.android.data.extensions.parseHttpError
 import com.picpay.desafio.android.data.mapper.UserResponseToModelMapper
 import com.picpay.desafio.android.data.remote.api.UserApi
 import com.picpay.desafio.android.domain.model.response.User
@@ -11,6 +12,6 @@ class UserRemoteDataSourceImpl(
     private val userMapper: UserResponseToModelMapper
 ) : UserRemoteDataSource {
     override fun getUsers(): Flow<List<User>> {
-        return flow { emit(userMapper.map(userApi.getUsers())) }
+        return flow { emit(userMapper.map(userApi.getUsers())) }.parseHttpError()
     }
 }
