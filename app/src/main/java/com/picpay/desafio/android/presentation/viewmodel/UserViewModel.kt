@@ -8,6 +8,8 @@ import com.picpay.desafio.android.R
 import com.picpay.desafio.android.domain.exception.ConnectionError
 import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.domain.usecase.GetUserUseCase
+import com.picpay.desafio.android.presentation.error.mapToError
+import com.picpay.desafio.android.presentation.resourceprovider.ResourceProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -49,16 +51,4 @@ class UserViewModel(
             else -> _error.value = Pair(R.string.error_title, R.string.error_msg)
         }
     }
-
-
-    // terminar o data source local
-
-    // adicionar os fragments um pra lista
-
-    // fragment pra tela de detalhes
-
-    // colocar telas de erro com ilustração
-
-    // adicionar testes unitários
-
 }

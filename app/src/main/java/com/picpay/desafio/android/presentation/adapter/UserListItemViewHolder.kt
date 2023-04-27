@@ -13,15 +13,21 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_user.view.name
 import kotlinx.android.synthetic.main.list_item_user.view.picture
 import kotlinx.android.synthetic.main.list_item_user.view.progressBar
+import kotlinx.android.synthetic.main.list_item_user.view.root
 import kotlinx.android.synthetic.main.list_item_user.view.username
 import java.lang.Exception
 
-class UserListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class UserListItemViewHolder(itemView: View, private val onItemClick: (User) -> Unit) : RecyclerView.ViewHolder
+    (itemView) {
 
     private var _binding: ListItemUserBinding? = null
     private val binding get() = _binding
 
+
     fun bind(user: User) {
+        itemView.setOnClickListener {
+            onItemClick(user)
+        }
         itemView.name.text = user.name
         itemView.username.text = user.username
         itemView.progressBar.isVisible = false
@@ -37,13 +43,14 @@ class UserListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                     itemView.progressBar.isVisible = false
                 }
             })
+
     }
 
     companion object {
-        fun build(parent: ViewGroup): UserListItemViewHolder {
+        fun build(parent: ViewGroup, onItemClick: (User) -> Unit): UserListItemViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.list_item_user, parent, false)
-            return UserListItemViewHolder(view)
+            return UserListItemViewHolder(view, onItemClick)
         }
     }
 }

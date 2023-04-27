@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.FragmentUserListBinding
+import com.picpay.desafio.android.domain.model.response.User
 import com.picpay.desafio.android.presentation.adapter.UserListAdapter
 import com.picpay.desafio.android.presentation.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,7 +19,8 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
     private var _binding: FragmentUserListBinding? = null
     private val binding get() = _binding
 
-    private val adapter: UserListAdapter by lazy { UserListAdapter() }
+    private lateinit var adapter: UserListAdapter
+    private var user = mutableListOf<User>()
     private val viewModel: UserViewModel by viewModel()
 
 
@@ -41,9 +43,23 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
     }
 
     private fun setupRecyclerView() {
-        binding?.recyclerView?.adapter = adapter
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
-        binding?.userListProgressBar?.visibility = View.VISIBLE
+
+        adapter = UserListAdapter { user ->
+            user.let {
+                activity?.supportFragmentManager?.beginTransaction()?.replace(
+                    R.id.mainActivity, UserDetailFragment
+                        .newInstance(UserDetailArgs(user.name.orEmpty(), user.username.orEmpty(), user.img.orEmpty()))
+                )
+                    ?.addToBackStack(UserDetailFragment::class.java.name)
+                    ?.commit()
+            }
+
+        }
+        adapter.apply {
+            binding?.recyclerView?.adapter = adapter
+            binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
+            binding?.userListProgressBar?.isVisible = true
+        }
     }
 
     private fun observeViewModel() {
@@ -64,11 +80,8 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
             binding?.let {
                 it.userListProgressBar.isVisible = false
                 it.recyclerView.isVisible = false
+                it.errorLayout.root.isVisible = true
             }
-        // ajustar a tela de erro semelhante do pp
-            // ajustar a tela de detalhes
-        //    fazer melhorias/boas praticas
-
         }
     }
 
