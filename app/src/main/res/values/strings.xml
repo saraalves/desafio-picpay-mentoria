@@ -10,5 +10,11 @@
     <string name="connection_error_title">Ops, sem conexão</string>
     <string name="connection_error_msg">Sem conexão com a internet.</string>
     <string name="error_button">Tentar novamente</string>
+    <string name="without_connection_error_title">Ops! Sem conexão</string>
+    <string name="without_connection_error_msg">Sem conexão com a internet</string>
+    <string name="withou_connection_try_again_button">Tentar novamente</string>
+    <string name="without_connection_try_later_btn">Tentar mais tarde</string>
+    <string name="something_wrong_title">Opa! Erramos por aqui</string>
+    <string name="system_failed_msg">Tivemos uma falha no sistema e não conseguimos carregar</string>
 
 </resources>
