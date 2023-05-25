@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/genericErrorImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        app:srcCompat="@mipmap/error_generico_1" />
+
+    <TextView
+        android:id="@+id/genericErrorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/something_wrong_title"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genericErrorImage" />
+
+    <TextView
+        android:id="@+id/genericErrorMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_16_dp"
+        android:gravity="center_horizontal"
+        android:text="@string/system_failed_msg"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genericErrorTitle" />
+
+    <Button
+        android:id="@+id/storeGenericErrorButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dim_46_dp"
+        android:layout_marginStart="@dimen/dim_16_dp"
+        android:layout_marginLeft="@dimen/dim_16_dp"
+        android:layout_marginEnd="@dimen/dim_16_dp"
+        android:layout_marginRight="@dimen/dim_16_dp"
+        android:layout_marginBottom="@dimen/dim_32_dp"
+        android:layout_marginTop="@dimen/dim_8_dp"
+        android:text="@string/withou_connection_try_again_button"
+        app:layout_constraintBottom_toTopOf="@+id/genericErrorButtonTryLater"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genericErrorMsg"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/genericErrorButtonTryLater"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dim_46_dp"
+        android:layout_marginStart="@dimen/dim_16_dp"
+        android:layout_marginEnd="@dimen/dim_16_dp"
+        android:layout_marginBottom="@dimen/dim_32_dp"
+        android:layout_marginTop="@dimen/dim_8_dp"
+        android:background="@color/colorTransparent"
+        android:text="@string/without_connection_try_later_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.20" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

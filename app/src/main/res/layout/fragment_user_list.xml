@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentUserList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragmentUserList"
+    android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
     tools:context=".presentation.fragment.UserListFragment">
 
@@ -57,5 +58,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/errorLayout"
+        layout="@layout/layout_network_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_16_dp"
+        android:visibility="gone" />
 
 </LinearLayout>
