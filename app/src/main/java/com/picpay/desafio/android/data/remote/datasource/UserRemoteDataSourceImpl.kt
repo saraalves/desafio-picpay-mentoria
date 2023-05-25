@@ -2,7 +2,7 @@ package com.picpay.desafio.android.data.remote.datasource
 
 import com.picpay.desafio.android.data.extensions.parseHttpError
 import com.picpay.desafio.android.data.mapper.UserResponseToModelMapper
-import com.picpay.desafio.android.data.remote.api.UserApi
+import com.picpay.desafio.android.data.remote.datasource.service.UserApi
 import com.picpay.desafio.android.domain.model.response.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
